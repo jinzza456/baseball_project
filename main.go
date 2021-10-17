@@ -55,6 +55,7 @@ func Pitching() int {
 
 type Count struct {
 	basecount   int
+	foulcount   int
 	strikecount int
 	outcount    int
 	score       int
@@ -74,27 +75,56 @@ func (c *Count) Compare(swing int) {
 	line2 := [3]int{4, 5, 6}
 	line3 := [3]int{7, 8, 9}
 	pitch := Pitching()
-	if pitch == swing {
-		fmt.Println("------!!!! 안   타 !!!!------")
-		c.basecount++
-		return
-	}
-	for i := 0; i < 3; i++ {
-		if line1[i] == pitch && line1[i] == swing {
-			fmt.Println("*******!! 파   울 !!*******")
-			c.strikecount++
+
+	for {
+		if pitch == swing {
+			fmt.Println("------!!!! 안   타 !!!!------")
+			c.basecount++
 			break
-		} else if line2[i] == pitch && line2[i] == swing {
-			fmt.Println("*******!! 파   울 !!*******")
-			c.strikecount++
-			break
-		} else if line3[i] == pitch && line3[i] == swing {
-			fmt.Println("*******!! 파   울 !!*******")
-			c.strikecount++
-			break
-		} else {
-			fmt.Println("*******!! 스트라이크 !!*******")
-			c.strikecount++
+		} else if swing <= 3 {
+			for i := 0; i < 3; i++ {
+				if line1[i] == pitch {
+					fmt.Println("*******!! 파   울 !!*******")
+					swing = pitch
+					c.strikecount++
+					break
+				}
+			}
+			if swing != pitch {
+				fmt.Println("*******!! 스트라이크 !!*******")
+				c.strikecount++
+				break
+			}
+		} else if swing >= 4 && swing < 7 {
+			for i := 0; i < 3; i++ {
+				if line2[i] == pitch {
+					fmt.Println("*******!! 파   울 !!*******")
+					c.strikecount++
+					swing = pitch
+					break
+				}
+			}
+			if swing != pitch {
+				fmt.Println("*******!! 스트라이크 !!*******")
+				c.strikecount++
+				break
+			}
+
+		} else if swing >= 7 && swing < 10 {
+			for i := 0; i < 3; i++ {
+				if line3[i] == pitch {
+					fmt.Println("*******!! 파   울 !!*******")
+					c.strikecount++
+					swing = pitch
+					break
+				}
+			}
+			if swing != pitch {
+				fmt.Println("*******!! 스트라이크 !!*******")
+				c.strikecount++
+				break
+			}
 		}
+		break
 	}
 }
