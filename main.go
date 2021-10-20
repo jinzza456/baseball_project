@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"math/rand"
 	"time"
+
+	"github.com/jinzza456/baseball_project/lib/call"
 )
 
 // 오타 , 카멜, 함수의 기능은 하나만 ,함수와 매서드 중 적합한걸 사용, 매서드명 및 함수명 이 의미있게
@@ -111,38 +113,38 @@ func (c *ProgressOfGameCount) ResetHitCount() {
 	c.hitCount = 0
 }
 
-func OutCall() {
-	fmt.Println("!!!****!!!! 아    웃 !!!!****!!!")
-}
+// func OutCall() {
+// 	fmt.Println("!!!****!!!! 아    웃 !!!!****!!!")
+// }
 
-func StrikeCall() {
-	fmt.Println("!!*****!!!! 스트라이크 !!!!*****!!")
-}
+// func StrikeCall() {
+// 	fmt.Println("!!*****!!!! 스트라이크 !!!!*****!!")
+// }
 
-func FoulCall() {
-	fmt.Println("!******!!!!! 파   울 !!!!!******!")
-}
+// func FoulCall() {
+// 	fmt.Println("!******!!!!! 파   울 !!!!!******!")
+// }
 
-func HitCall() {
-	fmt.Println("------!!!!!! 안   타 !!!!!!------")
-}
+// func HitCall() {
+// 	fmt.Println("------!!!!!! 안   타 !!!!!!------")
+// }
 
-func ScoredCall() {
-	fmt.Println("-----!!!!!!!! 득 점 !!!!!!!!-----")
-}
+// func ScoredCall() {
+// 	fmt.Println("-----!!!!!!!! 득 점 !!!!!!!!-----")
+// }
 
-func GameStartCall() {
-	fmt.Println("---------!! Play Ball !!---------")
-}
+// func GameStartCall() {
+// 	fmt.Println("---------!! Play Ball !!---------")
+// }
 
-func GameOverCall() {
-	fmt.Println("---- 게 --- 임 ---- 종 --- 료 ----")
-}
+// func GameOverCall() {
+// 	fmt.Println("---- 게 --- 임 ---- 종 --- 료 ----")
+// }
 
 func IfBaseCountIsFour() {
 
 	if c.baseCount == 4 {
-		ScoredCall()
+		call.ScoredCall()
 		c.AddScore()
 		c.ResetBaseCount()
 	}
@@ -160,7 +162,7 @@ func IfFoulCountIsTwo() {
 func IfStrikeCountIsThree() {
 
 	if c.strikeCount == 3 {
-		OutCall()
+		call.OutCall()
 		c.AddOutCount()
 	}
 }
@@ -195,7 +197,7 @@ func ShowCurrentScore() {
 func InCaseHit(swing, pitch int) {
 
 	if pitch == swing {
-		HitCall()
+		call.HitCall()
 		c.AddBaseCount()
 		IfBaseCountIsFour()
 	}
@@ -203,7 +205,7 @@ func InCaseHit(swing, pitch int) {
 
 func InCaseStrike() {
 
-	StrikeCall()
+	call.StrikeCall()
 	c.AddStrikeCount()
 	IfFoulCountIsTwo()
 }
@@ -212,7 +214,7 @@ func InCaseSwingLine1(pitch int) {
 
 	for i := range line1 {
 		if line1[i] == pitch {
-			FoulCall()
+			call.FoulCall()
 			c.AddFoulCount()
 			IfFoulCountIsTwo()
 			break
@@ -225,7 +227,7 @@ func InCaseSwingLine2(pitch int) {
 
 	for i := range line1 {
 		if line2[i] == pitch {
-			FoulCall()
+			call.FoulCall()
 			c.AddFoulCount()
 			IfFoulCountIsTwo()
 			break
@@ -238,7 +240,7 @@ func InCaseSwingLine3(pitch int) {
 
 	for i := range line1 {
 		if line3[i] == pitch {
-			FoulCall()
+			call.FoulCall()
 			c.AddFoulCount()
 			IfFoulCountIsTwo()
 			break
@@ -330,7 +332,7 @@ func main() {
 
 	ShowPlayersList()
 
-	GameStartCall()
+	call.GameStartCall()
 
 	c = &ProgressOfGameCount{0, 0, 0, 0, 0, 0}
 
@@ -363,7 +365,7 @@ func main() {
 			}
 		}
 		if c.outCount == 3 {
-			GameOverCall()
+			call.GameOverCall()
 			break
 		}
 	}
