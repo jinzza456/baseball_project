@@ -1,0 +1,247 @@
+package main
+
+import (
+	"fmt"
+	"math/rand"
+	"time"
+)
+
+const (
+	foul = "FOUL"
+	hit = "HIT"
+	strike = "STRIKE"
+)
+
+// 상수는 메모리의 로스를 줄이기 위해 const 나 var 로 뺴놓는게 좋음
+var (
+	line1 = [3]int{1, 2, 3}
+	line2 = [3]int{4, 5, 6}
+	line3 = [3]int{7, 8, 9}
+)
+
+type (
+		PlayGameInformation struct {
+			baseCount   int
+			foulCount   int
+			strikeCount int
+			outCount    int
+			score       int
+		}
+		Pitcher struct {
+			name string
+		}
+)
+
+func (p Pitcher) Pitching() int {
+	fmt.Println("피쳐 ", p.name, "이 던졌습니다!")
+	rand.Seed(time.Now().Unix())
+	var rnd int
+	rnd = rand.Intn(9) + 1
+	return rnd
+}
+
+func (p *PlayGameInformation) AddOutCount() {
+	p.outCount++
+}
+
+func (p *PlayGameInformation) AddFourCount() {
+	p.foulCount++
+}
+
+func (p *PlayGameInformation) AddStrikeCount() {
+	p.strikeCount++
+}
+
+func (p *PlayGameInformation) AddBaseCount() {
+	p.baseCount++
+}
+
+func introducePlayer(number int , name string) {
+	fmt.Printf("Hello My Number is %d , and My Name in %s", number, name)
+	fmt.Println()
+}
+
+func getLineNumberByInput(input int) int {
+	return 1
+}
+
+func pitchingResult(swing , pitch int) string {
+	if swing == pitch {
+		return hit
+	} else {
+		return foul
+	}
+	// 여기에 뭐 비교 하는 로직이 들어간다.
+	//sr := getLineNumberByInput(swing)
+	//pr := getLineNumberByInput(pitch)
+	return strike
+}
+
+func main() {
+	players := make([]string, 9, 9)
+	for i := range players { // 선수의 숫자 만큼 반복 
+		var p string
+		fmt.Printf("%d번 선수를 입력해 주세요.\n", i+1)
+		fmt.Scanf("%s\n", &p)
+		players[i] = p
+	}
+	fmt.Println("선수 등록이 완료 되었습니다.")
+	fmt.Println(" [최종명단]")
+	for i := range players {
+		introducePlayer(i+1 , players[i])
+	}
+	info := PlayGameInformation{
+		baseCount: 0,
+		foulCount: 0,
+		strikeCount: 0,
+		outCount: 0,
+		score: 0,
+	}
+	pit := Pitcher{
+		name: "텟페이",
+	}
+	for {
+		for i := 0; i < len(players); i++ {
+			fmt.Println(i+1, "번 타자", players[i])
+			fmt.Println("1 ~ 9 까지의 숫자를 입력하여 스윙 하세요!")
+			pitR := pit.Pitching()
+			var swing int
+			fmt.Scanf("%d/n", &swing)
+			fmt.Println("Player Input : ", swing)
+			fmt.Println("Pitcher Result : ", pitR)
+			pr := pitchingResult(swing, pitR)
+			if pr == foul {
+				info.AddFourCount()
+				fmt.Println("파울!")
+			} else if pr == strike {
+				info.AddStrikeCount()
+				fmt.Println("스트라이크!")
+			} else if pr == hit {
+				info.AddBaseCount()
+				fmt.Println("안타!")
+			}
+			info.AddOutCount()
+			fmt.Println("Out Count : ", info.outCount)
+			if info.outCount == 3 {
+				break
+			}
+		}
+		if info.outCount == 3 {
+			break
+		}
+	}
+	fmt.Println("Game Set! You Lose!!")
+	// 게임 시작
+	//var score *Count
+	// score.basecount = 0
+	// score.strikecount = 0
+	// score.outcount = 0
+	// score.score = 0
+	//for {
+	//	for i := 0; i < len(players); i++ {
+	//		fmt.Println(i+1, "번 타자", players[i])
+	//		fmt.Println("1 ~ 9 까지의 숫자를 입력하여 스윙 하세요!")
+	//		var swing int
+	//		fmt.Scanf("%d/n", &swing)
+	//		pitch := Pitching()
+	//		score.Compare(swing, pitch)
+	//
+	//	}
+	//
+	//}
+
+}
+
+func Pitching() int {
+	rand.Seed(time.Now().Unix())
+	var rnd int
+	rnd = rand.Intn(9) + 1
+	// fmt.Println(rnd)
+	return rnd
+}
+
+
+//func (c *Count) Score() {
+//	if c.basecount == 4 {
+//		fmt.Println("------!!!! 득 점 !!!!------")
+//		c.basecount = 0
+//		c.score++
+//		fmt.Println("현재 스코어", c.score, "점")
+//	}
+//}
+//
+//func (c *Count) Outcount() {
+//	if c.foulcount == 2 {
+//		c.strikecount++
+//		c.foulcount = 0
+//	}
+//	if c.strikecount == 3 {
+//		fmt.Println("!!!*****!!! 아    웃 !!!*****!!!")
+//		c.strikecount = 0
+//		c.outcount++
+//	}
+//	if c.outcount == 3 {
+//		fmt.Println("!!!*****!!! 삼진아웃 !!!*****!!!")
+//		fmt.Println("--- 게 --- 임 ---- 종 --- 료 ---")
+//		c.outcount = 0
+//	}
+//}
+
+// func (c )
+
+
+// Piching과 입력값 비교하기
+//func (c *Count) Compare(swing, pitch int) {
+//
+//	for {
+//		if pitch == swing {
+//			fmt.Println("------!!!! 안   타 !!!!------")
+//			c.basecount++
+//			break
+//		} else if swing <= 3 {
+//			for i := 0; i < 3; i++ {
+//				if line1[i] == pitch {
+//					fmt.Println("*******!! 파   울 !!*******")
+//					swing = pitch
+//					c.strikecount++
+//					break
+//				}
+//			}
+//			if swing != pitch {
+//				fmt.Println("*******!! 스트라이크 !!*******")
+//				c.strikecount++
+//				break
+//			}
+//		} else if swing >= 4 && swing < 7 {
+//			for i := 0; i < 3; i++ {
+//				if line2[i] == pitch {
+//					fmt.Println("*******!! 파   울 !!*******")
+//					c.strikecount++
+//					swing = pitch
+//					break
+//				}
+//			}
+//			if swing != pitch {
+//				fmt.Println("*******!! 스트라이크 !!*******")
+//				c.strikecount++
+//				break
+//			}
+//
+//		} else if swing >= 7 && swing < 10 {
+//			for i := 0; i < 3; i++ {
+//				if line3[i] == pitch {
+//					fmt.Println("*******!! 파   울 !!*******")
+//					c.strikecount++
+//					swing = pitch
+//					break
+//				}
+//			}
+//			if swing != pitch {
+//				fmt.Println("*******!! 스트라이크 !!*******")
+//				c.strikecount++
+//				break
+//			}
+//		}
+//		break
+//	}
+//}
