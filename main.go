@@ -5,7 +5,7 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/jinzza456/baseball_project/lib/call"
+	call "github.com/jinzza456/baseball_project/lib"
 )
 
 // 오타 , 카멜, 함수의 기능은 하나만 ,함수와 매서드 중 적합한걸 사용, 매서드명 및 함수명 이 의미있게
@@ -30,7 +30,6 @@ type ProgressOfGameCount struct {
 }
 
 func InputPlayersEntry() {
-
 	for i := range players {
 		var p string
 		fmt.Printf("%d번 선수를 입력해 주세요.\n", i+1)
@@ -142,7 +141,6 @@ func (c *ProgressOfGameCount) ResetHitCount() {
 // }
 
 func IfBaseCountIsFour() {
-
 	if c.baseCount == 4 {
 		call.ScoredCall()
 		c.AddScore()
@@ -151,16 +149,13 @@ func IfBaseCountIsFour() {
 }
 
 func IfFoulCountIsTwo() {
-
 	if c.foulCount == 2 {
 		c.AddStrikeCount()
 		c.ResetFoulCount()
 	}
-
 }
 
 func IfStrikeCountIsThree() {
-
 	if c.strikeCount == 3 {
 		call.OutCall()
 		c.AddOutCount()
@@ -172,12 +167,10 @@ func IfHitCountIsOne() {
 }
 
 func ShowCurrentGameCount() {
-
 	fmt.Printf("%d 스트라이크 / %d 아웃 \n", c.strikeCount, c.outCount)
 }
 
 func ShowRunnerOnBase() {
-
 	if c.baseCount == 3 {
 		fmt.Println("주자 만루")
 	} else if c.baseCount == 2 {
@@ -190,12 +183,10 @@ func ShowRunnerOnBase() {
 }
 
 func ShowCurrentScore() {
-
 	fmt.Printf("현재 스코어 %d\n", c.score)
 }
 
 func InCaseHit(swing, pitch int) {
-
 	if pitch == swing {
 		call.HitCall()
 		c.AddBaseCount()
@@ -204,14 +195,12 @@ func InCaseHit(swing, pitch int) {
 }
 
 func InCaseStrike() {
-
 	call.StrikeCall()
 	c.AddStrikeCount()
 	IfFoulCountIsTwo()
 }
 
 func InCaseSwingLine1(pitch int) {
-
 	for i := range line1 {
 		if line1[i] == pitch {
 			call.FoulCall()
@@ -224,7 +213,6 @@ func InCaseSwingLine1(pitch int) {
 }
 
 func InCaseSwingLine2(pitch int) {
-
 	for i := range line1 {
 		if line2[i] == pitch {
 			call.FoulCall()
@@ -237,7 +225,6 @@ func InCaseSwingLine2(pitch int) {
 }
 
 func InCaseSwingLine3(pitch int) {
-
 	for i := range line1 {
 		if line3[i] == pitch {
 			call.FoulCall()
