@@ -9,7 +9,6 @@ var (
 )
 
 func InCaseHit(swing, pitch int) {
-
 	if pitch == swing {
 		BaseballLib.HitCall()
 		BaseballLib.AddBaseCount()
@@ -18,7 +17,6 @@ func InCaseHit(swing, pitch int) {
 }
 
 func InCaseStrike() {
-
 	BaseballLib.StrikeCall()
 	BaseballLib.AddStrikeCount()
 	IfFoulCountIsTwo()

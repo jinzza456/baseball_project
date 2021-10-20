@@ -43,7 +43,6 @@ func ShowRunnerOnBase(c *ProgressOfGameCount) {
 }
 
 func ShowCurrentScore(c *ProgressOfGameCount) {
-
 	fmt.Printf("현재 스코어 %d\n", c.score)
 }
 
